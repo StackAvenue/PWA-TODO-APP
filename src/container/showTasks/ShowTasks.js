@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { firebaseRef } from '../../firebase'
+import { format } from "date-fns";
+import { firestore } from '../../firebase'
 import  CheckboxControl  from '../checkboxes/CheckBoxes'
 
 class ShowTask extends Component {
@@ -10,10 +11,14 @@ class ShowTask extends Component {
 
   toggle = () => this.setState((prevState) => ({ checked: !prevState.checked }))
 
-  componentDidMount() {
-      firebaseRef.on('value', snap => {
-        this.setState({ tasks: Object.values(snap.val()) })
-      })
+  componentDidMount = async () => {
+    let tasks;
+    const snapshot =  await firestore.collection('task').doc(format(this.props.date, "yyyy-MM-dd")).get();
+    snapshot.data() ? tasks =  snapshot.data().taskArray : tasks = [];
+    console.log('snapshot', snapshot.data());
+
+    this.setState({tasks});
+    console.log(this.state.tasks);
   }
 
   render() {

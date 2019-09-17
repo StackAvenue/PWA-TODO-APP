@@ -1,14 +1,11 @@
 import React from 'react';
 import './App.css';
-import './addTask/AddTask'
-import AddTask from './addTask/AddTask';
-import ShowTask from './showTasks/ShowTasks'
+import Calender from './calender/Calender';
 
 function App() {
   return (
     <div className="App">
-      <AddTask/>
-      <ShowTask/>
+      <Calender />
     </div>
   );
 }
